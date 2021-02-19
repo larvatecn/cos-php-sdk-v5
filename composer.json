@@ -1,5 +1,5 @@
 {
-  "name": "qcloud/cos-sdk-v5",
+  "name": "larva/cos-sdk-v5",
   "description": "PHP SDK for QCloud COS",
   "keywords": [
     "qcloud",
