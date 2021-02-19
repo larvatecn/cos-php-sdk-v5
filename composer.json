@@ -7,24 +7,22 @@
     "php"
   ],
   "license": "MIT",
-  "authors": [
-    {
-      "name": "yaozongyou",
-      "email": "yaozongyou@vip.qq.com"
-    },
-    {
-      "name": "lewzylu",
-      "email": "327874225@qq.com"
-    }
-  ],
-  "autoload": {
-    "psr-0": {
-      "Qcloud\\Cos\\": "src/"
-    }
-  },
   "require": {
     "php": "^7.2 | ^8.0",
     "guzzlehttp/guzzle": "^6.5 || ^7.2",
     "guzzlehttp/guzzle-services": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Qcloud\\Cos\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Qcloud\\Cos\\Tests\\": "tests"
+    }
   }
 }
