@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^7.2 | ^8.0",
+    "php": "^7.4 | ^8.0",
     "guzzlehttp/guzzle": "^6.5 || ^7.2",
     "guzzlehttp/guzzle-services": "^1.0"
   },
@@ -18,7 +18,8 @@
   "autoload": {
     "psr-4": {
       "Qcloud\\Cos\\": "src"
-    }
+    },
+    "files": ["src/Common.php"]
   },
   "autoload-dev": {
     "psr-4": {
