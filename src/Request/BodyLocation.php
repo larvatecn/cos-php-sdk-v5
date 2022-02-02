@@ -29,18 +29,21 @@ class BodyLocation extends AbstractLocation
     /**
      * @param CommandInterface $command
      * @param RequestInterface $request
-     * @param Parameter $param
+     * @param Parameter        $param
      *
      * @return MessageInterface
      */
-    public function visit(CommandInterface $command, RequestInterface $request, Parameter $param)
-    {
+    public function visit(
+        CommandInterface $command,
+        RequestInterface $request,
+        Parameter $param
+    ) {
         $value = $request->getBody()->getContents();
         if ('' !== $value) {
             throw new \RuntimeException('Only one "body" location may exist per operation');
         }
         // binary string data from bound parameter
         $value = $command[$param->getName()];
-        return $request->withBody(Psr7\stream_for($value));
+        return $request->withBody(Psr7\Utils::streamFor($value));
     }
 }

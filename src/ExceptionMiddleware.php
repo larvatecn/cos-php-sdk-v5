@@ -4,13 +4,11 @@ namespace Qcloud\Cos;
 
 use Qcloud\Cos\Exception\ServiceResponseException;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
 
-class ExceptionMiddleware
-{
+class ExceptionMiddleware {
     private $nextHandler;
     protected $parser;
     protected $defaultException;
@@ -18,8 +16,7 @@ class ExceptionMiddleware
     /**
      * @param callable $nextHandler Next handler to invoke.
      */
-    public function __construct(callable $nextHandler)
-    {
+    public function __construct(callable $nextHandler) {
         $this->nextHandler = $nextHandler;
         $this->parser = new ExceptionParser();
         $this->defaultException = 'Qcloud\Cos\Exception\ServiceResponseException';
@@ -27,28 +24,26 @@ class ExceptionMiddleware
 
     /**
      * @param RequestInterface $request
-     * @param array $options
+     * @param array            $options
      *
      * @return PromiseInterface
      */
-    public function __invoke(RequestInterface $request, array $options)
-    {
+    public function __invoke(RequestInterface $request, array $options) {
         $fn = $this->nextHandler;
         return $fn($request, $options)->then(
-            function (ResponseInterface $response) use ($request) {
-                return $this->handle($request, $response);
-            }
-        );
-    }
+                    function (ResponseInterface $response) use ($request) {
+						return $this->handle($request, $response);
+                    }
+		);
+	}
 
-    public function handle(RequestInterface $request, ResponseInterface $response)
-    {
-        $code = $response->getStatusCode();
-        if ($code < 400) {
-            return $response;
-        }
+	public function handle(RequestInterface $request, ResponseInterface $response) {
+		$code = $response->getStatusCode();
+		if ($code < 400) {
+			return $response;
+		}
 
-        //throw RequestException::create($request, $response);
+		//throw RequestException::create($request, $response);
         $parts = $this->parser->parse($request, $response);
 
         $className = 'Qcloud\\Cos\\Exception\\' . $parts['code'];
@@ -59,10 +54,9 @@ class ExceptionMiddleware
         $className = class_exists($className) ? $className : $this->defaultException;
 
         throw $this->createException($className, $request, $response, $parts);
-    }
+	}
 
-    protected function createException($className, RequestInterface $request, ResponseInterface $response, array $parts)
-    {
+    protected function createException($className, RequestInterface $request, ResponseInterface $response, array $parts) {
         $class = new $className($parts['message']);
 
         if ($class instanceof ServiceResponseException) {

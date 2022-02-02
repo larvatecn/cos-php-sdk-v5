@@ -2,9 +2,4 @@
 
 namespace Qcloud\Cos\Exception;
 
-use Qcloud\Cos\Exception\ServiceResponseException;
-
-class CosException extends ServiceResponseException
-{
-
-}
+class CosException extends ServiceResponseException {}

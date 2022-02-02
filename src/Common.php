@@ -2,13 +2,9 @@
 
 namespace Qcloud\Cos;
 
-/**
- * @param string $region
- * @return string
- */
 function region_map($region)
 {
-    $regionmap = [
+    $regionmap = array(
         'cn-east' => 'ap-shanghai',
         'cn-south' => 'ap-guangzhou',
         'cn-north' => 'ap-beijing-1',
@@ -20,22 +16,18 @@ function region_map($region)
         'sh' => 'ap-shanghai',
         'gz' => 'ap-guangzhou',
         'cd' => 'ap-chengdu',
-        'sgp' => 'ap-singapore'];
-    if (array_key_exists($region, $regionmap)) {
+        'sgp' => 'ap-singapore'
+    );
+    if (isset($regionmap[$region])) {
         return $regionmap[$region];
     }
     return $region;
 }
 
-/**
- * @param string $key
- * @return string|string[]
- */
 function encodeKey($key)
 {
     return str_replace('%2F', '/', rawurlencode($key));
 }
-
 
 function endWith($haystack, $needle)
 {
@@ -52,7 +44,7 @@ function startWith($haystack, $needle)
     if ($length == 0) {
         return true;
     }
-    return (substr($haystack, $length) === $needle);
+    return (substr($haystack, 0, $length) === $needle);
 }
 
 function headersMap($command, $request)
@@ -67,4 +59,11 @@ function headersMap($command, $request)
         }
     }
     return $request;
+}
+
+if (!function_exists('str_contains')) {
+    function str_contains($haystack, $needle)
+    {
+        return strpos($haystack, $needle) !== false;
+    }
 }

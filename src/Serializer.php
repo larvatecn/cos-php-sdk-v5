@@ -3,7 +3,6 @@
 namespace Qcloud\Cos;
 
 use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\Guzzle\SchemaValidator;
 use GuzzleHttp\Command\Guzzle\DescriptionInterface;
 use GuzzleHttp\Command\Guzzle\Serializer as DefaultSerializer;
 use Psr\Http\Message\RequestInterface;
@@ -19,13 +18,11 @@ class Serializer extends DefaultSerializer
     public function __construct(
         DescriptionInterface $description,
         array $requestLocations = []
-    )
-    {
+    ) {
         // Override Guzzle's body location as it isn't raw binary data
         $requestLocations['body'] = new Request\BodyLocation;
         parent::__construct($description, $requestLocations);
     }
-
     /**
      * Authorization header is Loco's preferred authorization method.
      * Add Authorization header to request if API key is set, unless query is explicitly configured as auth method.
@@ -43,9 +40,8 @@ class Serializer extends DefaultSerializer
     protected function prepareRequest(
         CommandInterface $command,
         RequestInterface $request
-    )
-    {
-        /*
+    ) {
+		/*
         if ($command->offsetExists('key') === true) {
             $mode = empty($command->offsetGet('auth')) === false
                     ? $command->offsetGet('auth')
@@ -79,7 +75,7 @@ class Serializer extends DefaultSerializer
                 }
             }
         }
-        */
+		*/
         return parent::prepareRequest($command, $request);
     }
 }
